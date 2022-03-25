@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>typo test</title>
+	<style type="text/css">
+		*{
+			padding: 0;
+			margin: 0;
+
+			
+		}
+		body{background-color: black;}
+          #totaldiv{width: 100%;
+			height: 100vh;background-color: black;}
+		.maindiv{
+			width: 100%;
+			height: 100vh;
+			
+
+			text-align: center;
+			display: flex; /*first prolem outer div was going down*/
+		}
+		.center{
+			margin: auto
+			
+		}
+		textarea{
+             background-color: #444;
+             color: white;
+             border: 10px solid #4248f5;
+             border-radius: 1%;
+             padding: 5px;
+			}
+			#btn{
+				border: 5px solid #4248f5;
+				border-radius: 20%;
+				font-size: 1rem;
+				padding: 10px 20px;
+				width: 100px;
+				background-color: cyan;
+				font-family: "Lucida Console", "Courier New", monospace;
+
+
+			}
+			#msg{color: white;
+				font-family: "Lucida Console", "Courier New", monospace;
+			} 
+			#mode{color: black;
+				margin-top: 20px;background-color: cyan;
+				font-family: "Lucida Console", "Courier New", monospace;
+				padding: 2px;}
+
+	</style>
+
+
+
+</head>
+<body>
+	<div id="totaldiv">
+	<button id="mode" onclick="changeMode()">Light Mode</button>
+	<div class="maindiv">
+		<div class="center">
+			<h1  style="color: white;">TEST YOUR TYPING SPEED </h1>
+			<h2 id="msg" onpaste="return false;" onCopy="return false">
+			
+		</h2>
+			<textarea  id="mywords" rows="10" cols="60" disabled="true" onpaste="return false;" onCopy="return false"></textarea>
+			<br>
+			<button id="btn">Start</button>
+
+		</div></div>
+	</div>
+
+	<script type="text/javascript">
+		
+		const msg=document.querySelector('#msg');
+
+		const typeWords=document.querySelector('#mywords');
+		const btn=document.querySelector('#btn');
+		l et time1,time2;
+		
+		function startTime(){
+			let randomNum=Math.floor(Math.random()*10);
+			console.log(randomNum);
+			if(randomNum<=5)
+			{
+				msg.innerText="Computer Science Engineering (CSE) is an academic programme that integrates the field of Computer Engineering and Computer Science. It is one of the most sought after courses amongst engineering students. The course contains a plethora of topics but emphasises the basics of computer programming and networking. The topics covered in the course are computation, algorithms, programming languages, program design, computer software, computer hardware, and others."
+ 
+			}
+			else
+			{
+				msg.innerText="Technology refers to methods, systems, and devices which are the result of scientific knowledge being used for practical purposes. Technology is changing fast. They should be allowed to wait for cheaper technologies to be developed.";
+			}
+			console.log("the value");
+			let str1=msg.innerText;
+			console.log(str1);
+			let str2=str1.length;
+			typeWords.setAttribute('maxlength',str2);
+
+			let starting= new Date();                              // learnt this
+			time1=starting.getTime();
+			btn.innerText="Done";
+
+		}
+		function wpm(){
+			let str=typeWords.value;
+			console.log(str);
+
+			let c=0,d=0;
+			for(let i=0;i<str.length;i++)
+               {
+               	c++;    //no of words
+               }
+               	
+               	
+         	return c;
+         }
+
+
+		
+		function endTime(){
+			let ending= new Date();                              // learnt this
+			time2=ending.getTime();
+			let totalTime=(time2-time1)/1000;
+			console.log(totalTime);
+			let cc=wpm();
+			let count=Math.floor(((cc/5)*60)/totalTime);
+			let str5=typeWords.value;
+			let d=0;
+			let msgStr=msg.innerText;
+               	console.log(msgStr);
+               	for (var i = 0; i<str5.length ; i++) {
+               		if(msgStr[i]!==str5[i])
+               		{
+                           d++;
+               		}
+
+               		        	}console.log(str5);
+               		        	console.log(d);
+			
+			msg.innerHTML=`Your Speed is ${count} WPM<br> Time taken : ${totalTime} <br>No. of errors : ${d}`;
+			
+		}
+
+
+		// main function
+		btn.addEventListener('click',function(){
+			
+			if(this.innerText=="Start")
+			{   
+				typeWords.disabled= false;
+				startTime();
+			}
+			else if(this.innerText=="Done")
+			{    
+				if(typeWords.value=="")
+				{
+				typeWords.disabled= true;
+				btn.innerText="Start";
+				typeWords.value="";
+				msg.innerText="You Typed Nothing";
+				}
+                 else{
+                 	typeWords.disabled= true;
+				btn.innerText="Start";
+				endTime();
+				typeWords.value="";}
+			}
+		})
+
+		//for changing color mode
+		function changeMode()
+
+		{     if(document.querySelector("#mode").innerText=="Light Mode")
+		     {
+			let changeMode=document.querySelector("#totaldiv");
+			changeMode.style.backgroundColor="white";
+			document.querySelector("#mode").innerText="Dark Mode";
+			document.querySelector("textarea").style.borderColor="green";
+			document.querySelector("#btn").style.borderColor="green";
+			document.querySelector("#msg").style.color="black";
+			document.querySelector("h1").style.color="black";
+
+
+              }  
+              else{
+              	let changeMode=document.querySelector("#totaldiv");
+			changeMode.style.backgroundColor="black";
+			document.querySelector("#mode").innerText="Light Mode";
+			document.querySelector("textarea").style.borderColor="#4248f5";
+			document.querySelector("#btn").style.borderColor="#4248f5";
+			document.querySelector("#msg").style.color="white";
+			document.querySelector("h1").style.color="white";
+              }                
+        }  
+	</script>
+		
+
+</body>
+</html>
